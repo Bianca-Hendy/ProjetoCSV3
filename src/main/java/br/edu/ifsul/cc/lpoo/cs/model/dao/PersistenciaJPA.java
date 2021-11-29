@@ -61,5 +61,6 @@ public class PersistenciaJPA implements InterfacePersistencia{
     public Jogador doLogin(String nickname, String senha) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     
 }
