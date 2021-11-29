@@ -7,17 +7,46 @@ package br.edu.ifsul.cc.lpoo.cs.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author bianca.evangelista
  */
+@Entity
+@Table(name = "tb_partida")
 public class Partida implements Serializable{
+    @Id
+    @SequenceGenerator(name = "seq_partida", sequenceName = "seq_partida_id", allocationSize = 1)
+    @GeneratedValue(generator = "seq_partida", strategy = GenerationType.SEQUENCE)
     private Integer id;
+    
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_inicio;
+    
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_fim;
-    private Jogador gamer;
-    private Round round;
+    
+    @ManyToOne    
+    @JoinColumn(name = "jogador_nickname", nullable = true)
+    private Jogador nickname;
+    
+    @OneToMany(mappedBy = "partida")
+    private List<Round> rounds;
     
     public Partida() {
     }
@@ -65,32 +94,33 @@ public class Partida implements Serializable{
     }
 
     /**
-     * @return the gamer
+     * @return the nickname
      */
-    public Jogador getGamer() {
-        return gamer;
+    public Jogador getNickname() {
+        return nickname;
     }
 
     /**
-     * @param gamer the gamer to set
+     * @param nickname the nickname to set
      */
-    public void setGamer(Jogador gamer) {
-        this.gamer = gamer;
+    public void setNickname(Jogador nickname) {
+        this.nickname = nickname;
     }
 
     /**
-     * @return the round
+     * @return the rounds
      */
-    public Round getRound() {
-        return round;
+    public List<Round> getRounds() {
+        return rounds;
     }
 
     /**
-     * @param round the round to set
+     * @param rounds the rounds to set
      */
-    public void setRound(Round round) {
-        this.round = round;
+    public void setRounds(List<Round> rounds) {
+        this.rounds = rounds;
     }
+
     
     
 }

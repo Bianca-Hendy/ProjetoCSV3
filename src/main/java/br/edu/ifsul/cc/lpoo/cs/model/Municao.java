@@ -5,59 +5,56 @@
  */
 package br.edu.ifsul.cc.lpoo.cs.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+
 /**
  *
  * @author bianca.evangelista
  */
+@Entity
+@Table(name = "tb_municao")
 public class Municao extends Artefato{
     
-    private String descricao;
-    private Integer qtdPente;
-    private Calibre tam;
-
-    public Municao() {
+     @Column(nullable = false)
+    private Boolean explosiva;
+        
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Calibre calibre;
+    
+     public Municao() {
     }
 
     /**
-     * @return the descricao
+     * @return the explosiva
      */
-    public String getDescricao() {
-        return descricao;
+    public Boolean getExplosiva() {
+        return explosiva;
     }
 
     /**
-     * @param descricao the descricao to set
+     * @param explosiva the explosiva to set
      */
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setExplosiva(Boolean explosiva) {
+        this.explosiva = explosiva;
     }
 
     /**
-     * @return the qtdPente
+     * @return the calibre
      */
-    public Integer getQtdPente() {
-        return qtdPente;
+    public Calibre getCalibre() {
+        return calibre;
     }
 
     /**
-     * @param qtdPente the qtdPente to set
+     * @param calibre the calibre to set
      */
-    public void setQtdPente(Integer qtdPente) {
-        this.qtdPente = qtdPente;
-    }
-
-    /**
-     * @return the tam
-     */
-    public Calibre getTam() {
-        return tam;
-    }
-
-    /**
-     * @param tam the tam to set
-     */
-    public void setTam(Calibre tam) {
-        this.tam = tam;
+    public void setCalibre(Calibre calibre) {
+        this.calibre = calibre;
     }
    
     

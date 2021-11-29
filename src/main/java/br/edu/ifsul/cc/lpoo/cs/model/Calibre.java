@@ -9,6 +9,7 @@ package br.edu.ifsul.cc.lpoo.cs.model;
  *
  * @author bianca.evangelista
  */
+
 public enum Calibre {
-    pequeno,medio,grande;
+    C03,C05,C08;
 }

@@ -28,41 +28,45 @@ import javax.persistence.TemporalType;
 @Table (name = "tb_jogador")
 public class Jogador implements Serializable{
     
-    @Id
+   @Id
     private String nickname;
     
-    @Column(length = 6, nullable = false)
+    @Column(nullable = false)
     private String senha;
+    
+    @Column(nullable = true)
+    private Integer pontos;
     
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_cadastro;
     
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_ultimo_login;
-    
-    @Column(nullable = false)
-    private Integer pontos;
-    
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "tb_artefatos", joinColumns = {@JoinColumn(name = "jogador_nickname")}, 
-                                       inverseJoinColumns = {@JoinColumn(name = "artefato_id")})
-    private List<Artefato> artefatos; //agregação
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "tb_patentes", joinColumns = {@JoinColumn(name = "jogador_nickname")}, 
-                                       inverseJoinColumns = {@JoinColumn(name = "patente_id")})
-    private List<Patente> patentes; //agregação
-    
-    @OneToMany(mappedBy = "jogador")
-    private List<Compra> compras;
     
     @ManyToOne
     @JoinColumn(name = "endereco_id", nullable = false)
     private Endereco endereco;
     
-    public Jogador() {
+    @OneToMany(mappedBy = "jogador")//mappedBy deve apontar para a referencia de jogador dentro de Compra.
+    private List<Compra> compras; //agregacao por composicao
+    
+    
+    @ManyToMany
+    @JoinTable(name = "tb_jogador_artefato", joinColumns = {@JoinColumn(name = "jogador_nickname")}, //agregacao, vai gerar uma tabela associativa.
+                                       inverseJoinColumns = {@JoinColumn(name = "artefato_id")})
+    private List<Artefato> artefatos;
+    
+    
+    @ManyToMany
+    @JoinTable(name = "tb_jogador_patente", joinColumns = {@JoinColumn(name = "jogador_nickname")}, //agregacao, vai gerar uma tabela associativa.
+                                       inverseJoinColumns = {@JoinColumn(name = "patente_id")})
+    private List<Patente> patentes;
+    
+    
+    public Jogador(){
+        
     }
 
     /**
@@ -93,7 +97,6 @@ public class Jogador implements Serializable{
         this.senha = senha;
     }
 
-   
     /**
      * @return the pontos
      */
@@ -107,57 +110,6 @@ public class Jogador implements Serializable{
     public void setPontos(Integer pontos) {
         this.pontos = pontos;
     }
-
-    /**
-     * @return the patentes
-     */
-    public List <Patente> getPatentes() {
-        return patentes;
-    }
-
-    /**
-     * @param patentes the patentes to set
-     */
-    public void setPatentes(List <Patente> patentes) {
-        this.patentes = patentes;
-    }
-
-    /**
-     * @return the compras
-     */
-    public List <Compra> getCompras() {
-        return compras;
-    }
-
-    /**
-     * @param compras the compras to set
-     */
-    public void setCompras(List <Compra> compras) {
-        this.compras = compras;
-    }
-
-    /**
-     * @return the artefatos
-     */
-    public List <Artefato> getArtefatos() {
-        return artefatos;
-    }
-
-    /**
-     * @param artefatos the artefatos to set
-     */
-    public void setArtefatos(List <Artefato> artefatos) {
-        this.artefatos = artefatos;
-    }
-    
-    public void setArtefato(Artefato artefato) {
-        
-        if(this.artefatos == null){
-            this.artefatos = new ArrayList();
-        }
-        
-        this.artefatos.add(artefato);
-    } 
 
     /**
      * @return the data_cadastro
@@ -186,4 +138,63 @@ public class Jogador implements Serializable{
     public void setData_ultimo_login(Calendar data_ultimo_login) {
         this.data_ultimo_login = data_ultimo_login;
     }
+
+    /**
+     * @return the endereco
+     */
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    /**
+     * @param endereco the endereco to set
+     */
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    /**
+     * @return the compras
+     */
+    public List<Compra> getCompras() {
+        return compras;
+    }
+
+    /**
+     * @param compras the compras to set
+     */
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
+    }
+
+    /**
+     * @return the artefatos
+     */
+    public List<Artefato> getArtefatos() {
+        return artefatos;
+    }
+
+    /**
+     * @param artefatos the artefatos to set
+     */
+    public void setArtefatos(List<Artefato> artefatos) {
+        this.artefatos = artefatos;
+    }
+
+    /**
+     * @return the patentes
+     */
+    public List<Patente> getPatentes() {
+        return patentes;
+    }
+
+    /**
+     * @param patentes the patentes to set
+     */
+    public void setPatentes(List<Patente> patentes) {
+        this.patentes = patentes;
+    }
+    
+    
+    
 }

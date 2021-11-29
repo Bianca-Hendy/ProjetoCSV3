@@ -28,7 +28,7 @@ public class ItensCompra implements Serializable{
     @GeneratedValue(generator = "seq_itenscompra", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
-    @Column
+    @Column(precision = 2, nullable = false)
     private Integer quantidade;
     
     @Column(precision = 2)
@@ -36,7 +36,7 @@ public class ItensCompra implements Serializable{
     
     @ManyToOne
     @JoinColumn(name = "compra_id", nullable = false)
-    private Compra compras;
+    private Compra compra;
     
     @ManyToOne    
     @JoinColumn(name = "artefato_id", nullable = true)
@@ -91,14 +91,14 @@ public class ItensCompra implements Serializable{
      * @return the compras
      */
     public Compra getCompras() {
-        return compras;
+        return compra;
     }
 
     /**
      * @param compras the compras to set
      */
     public void setCompras(Compra compras) {
-        this.compras = compras;
+        this.compra = compras;
     }
 
     /**

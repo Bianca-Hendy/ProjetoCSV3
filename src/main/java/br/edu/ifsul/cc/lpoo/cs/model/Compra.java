@@ -40,7 +40,7 @@ public class Compra implements Serializable{
     @Column(precision = 2, nullable = false)
     private Float valorTotal;
     
-    @OneToMany(mappedBy = "compras")
+    @OneToMany(mappedBy = "compra")
     private List<ItensCompra> itens;
     
     @ManyToOne

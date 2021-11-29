@@ -6,15 +6,38 @@
 package br.edu.ifsul.cc.lpoo.cs.model;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  *
  * @author bianca.evangelista
  */
+@Entity
+@Table(name = "tb_mapa")
 public class Mapa implements Serializable{
+    @Id
+    @SequenceGenerator(name = "seq_mapa", sequenceName = "seq_mapa_id", allocationSize = 1)
+    @GeneratedValue(generator = "seq_mapa", strategy = GenerationType.SEQUENCE)
     private Integer id;
+    
+    @Column (nullable = false, length = 200)
     private String nome;
-    private Local locais;
+    
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "tb_locais", joinColumns = {@JoinColumn(name = "mapa_id")}, 
+                                       inverseJoinColumns = {@JoinColumn(name = "local_id")})
+    private List <Local> locais;
     
     public Mapa() {
     }
@@ -48,16 +71,16 @@ public class Mapa implements Serializable{
     }
 
     /**
-     * @return the locais
+     * @param locais the locais to set
      */
-    public Local getLocais() {
-        return locais;
+    public void setLocais(Local locais) {
+        this.setLocais(locais);
     }
 
     /**
      * @param locais the locais to set
      */
-    public void setLocais(Local locais) {
+    public void setLocais(List <Local> locais) {
         this.locais = locais;
     }
     
